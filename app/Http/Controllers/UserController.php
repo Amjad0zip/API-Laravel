@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 class UserController extends Controller
 {
@@ -17,12 +18,15 @@ class UserController extends Controller
                     'message' => ['These credentials do not match our records.']
                 ], 404);
             }
-        
-             $token = $user->createToken('my-app-token')->plainTextToken;
+            $randomChars = '/@&+,./0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+            $token = Str::random(32, $randomChars); // Générer une chaîne de 32 caractères aléatoires avec des caractères spéciaux
+
+    // Change encoding method to SHA-256 hash
+            $hashedToken = Hash::make($token);
         
             $response = [
                 'user' => $user,
-                'token' => $token
+                'token' => $hashedToken
             ];
         
              return response($response, 201);

@@ -14,7 +14,7 @@ class CategoryController extends Controller
     protected function sendResponse($data, $status = Response::HTTP_OK)
     {
         $response = [
-            "code"=>Response::HTTP_OK,
+            "code"=>$status,
             "message"=>"success",
             "data"=>$data        ];
         return response()->json($response);
@@ -66,7 +66,7 @@ class CategoryController extends Controller
             return $this->failedResponse($ressource);
         }
         else{
-            return $this->sendResponse($ressource);
+            return $this->sendResponse($ressource,Response::HTTP_NOT_FOUND);
         }
     }
 
