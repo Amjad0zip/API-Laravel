@@ -19,15 +19,7 @@ class CategoryController extends Controller
             "data"=>$data        ];
         return response()->json($response);
     }
-    protected function failedResponse($data, $status = Response::HTTP_NOT_FOUND)
-    {
-        $response = [
-            "code"=>Response::HTTP_NOT_FOUND,
-            "message"=>"Failed",
-            "data"=>$data        
-        ];
-        return response()->json($response);
-    }
+
     public function testData(Request $request)
     {
         $rules = array(
@@ -63,10 +55,10 @@ class CategoryController extends Controller
         //
         $ressource = Device::all();
         if(!$ressource){
-            return $this->failedResponse($ressource);
+            return $this->sendResponse("Ressource not found",Response::HTTP_NOT_FOUND);
         }
         else{
-            return $this->sendResponse($ressource,Response::HTTP_NOT_FOUND);
+            return $this->sendResponse($ressource);
         }
     }
 
@@ -89,7 +81,7 @@ class CategoryController extends Controller
         }
         else
         {
-        return $this->failedResponse($ressource);
+        return $this->sendResponse("Ressource not found",Response::HTTP_NOT_FOUND);
         }
     }
 
@@ -110,7 +102,7 @@ class CategoryController extends Controller
         $ressource = Device::find($id);
 
         if(!$ressource){
-            return $this->failedResponse($ressource);
+            return $this->sendResponse("Ressource not found",Response::HTTP_NOT_FOUND);
         }
         else 
         {
@@ -134,7 +126,7 @@ class CategoryController extends Controller
         //
     $ressource = Device::find($request->id);
     if(!$ressource){
-        return $this->failedResponse($ressource);
+        return $this->sendResponse("Ressource not found",Response::HTTP_NOT_FOUND);
     }
     else{
         $Device = Device::find($request->id);
@@ -163,7 +155,7 @@ class CategoryController extends Controller
     {
         $ressource = Device::find($id);
         if(!$ressource){
-            return $this->failedResponse($ressource);
+            return $this->sendResponse("Ressource not found",Response::HTTP_NOT_FOUND);
         }
         else{
         $Device = Device::find($id);
